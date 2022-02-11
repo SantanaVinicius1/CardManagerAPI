@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RP_CardAPI.Models;
+using RP_CardAPI.Repositories;
+using RP_CardAPI.Repositories.Implementations;
 using RP_CardAPI.Repositories.Interfaces;
 
 namespace RP_CardAPI.UsesCases
@@ -18,9 +20,9 @@ namespace RP_CardAPI.UsesCases
 
         #region Constructor
 
-        public PaymentUseCase(IPaymentManager _paymentManager)
+        public PaymentUseCase()
         {
-            paymentManager = _paymentManager;
+            paymentManager = new PaymentManager();
         }
 
         #endregion
@@ -33,7 +35,6 @@ namespace RP_CardAPI.UsesCases
         public PaymentDetails execute(Payment purchase)
         {
 
-
             //Check if the payment is valid
             PaymentDetails paymentDetail = paymentManager.ValidatePayment(purchase);
 
@@ -41,7 +42,9 @@ namespace RP_CardAPI.UsesCases
             {
                 //if the payment is valid then update the balance
 
-                paymentManager.updateBalance(purchase);
+                paymentManager.SavePayment(purchase);
+               
+
 
                 return paymentDetail;
             }

@@ -1,4 +1,5 @@
 ﻿using RP_CardAPI.Models;
+using RP_CardAPI.Providers;
 using RP_CardAPI.Providers.Interfaces;
 using System;
 using System.Collections.Generic;

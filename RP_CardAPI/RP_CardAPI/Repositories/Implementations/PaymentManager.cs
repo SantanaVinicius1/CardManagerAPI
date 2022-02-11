@@ -4,35 +4,56 @@ using System.Linq;
 using System.Web;
 using RP_CardAPI.Models;
 using RP_CardAPI.Repositories.Interfaces;
+using RP_CardAPI.Providers.Interfaces;
+using RP_CardAPI.Providers;
 
 namespace RP_CardAPI.Repositories.Implementations
 {
     public class PaymentManager : IPaymentManager
     {
-        public void updateBalance(Payment payment)
+
+        IPaymentDataAccess _paymentDataAccess;
+        ICardDataAccess _cardDataAccess;
+
+        public PaymentManager()
         {
-            throw new NotImplementedException();
+            _paymentDataAccess = PaymentDataAccessFactory.GetPaymentDataAcessObj();
+            _cardDataAccess = CardDataAccessFactory.getCardDataAccessObj();
+        }
+
+        public void SavePayment(Payment payment)
+        {
+            _paymentDataAccess.SavePayment(payment);
+            _cardDataAccess.UpdateCardBalance(payment.cardNumber, (payment.purchaseValue + _paymentDataAccess.GetFeeValue()));
         }
 
         public PaymentDetails ValidatePayment(Payment payment)
         {
-            //// check JWT
+            PaymentDetails details = new PaymentDetails(true, "Payment ok!");
+            decimal balance;
+            
+            
+            balance = _cardDataAccess.GetCardBalance(payment.cardNumber);
+            decimal valueWithFee = payment.purchaseValue + _paymentDataAccess.GetFeeValue();
 
-
-            // check Fees
-            using (var db = new CardManagerEntities())
+            if(!_cardDataAccess.CheckSecurityCode(payment.cardNumber, payment.cardSecurityCode))
             {
-                var query = (from b in db.Fees
-                             select b.feeValue).First();
+                details.Success = false;
+                details.Message = "Invalid Card Security Code";
 
-
+                return details;
             }
 
+            if(valueWithFee > balance)
+            {
+                details.Success = false;
+                details.Message = "Insuficient funds!";
 
-
-
-
-            return new PaymentDetails();
+                return details;
+            }
+            
+            return details;
         }
+
     }
 }

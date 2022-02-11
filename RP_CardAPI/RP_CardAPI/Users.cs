@@ -12,12 +12,10 @@ namespace RP_CardAPI
     using System;
     using System.Collections.Generic;
     
-    public partial class Purchase
+    public partial class Users
     {
-        public string ID { get; set; }
-        public Nullable<int> cardID { get; set; }
-        public Nullable<decimal> value { get; set; }
-    
-        public virtual Cards Cards { get; set; }
+        public int ID { get; set; }
+        public string Username { get; set; }
+        public string password { get; set; }
     }
 }

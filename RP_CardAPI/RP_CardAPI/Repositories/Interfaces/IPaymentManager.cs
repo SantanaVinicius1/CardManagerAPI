@@ -11,6 +11,6 @@ namespace RP_CardAPI.Repositories.Interfaces
     {
         PaymentDetails ValidatePayment(Payment payment);
 
-        void updateBalance(Payment payment);
+        void SavePayment(Payment payment);
     }
 }

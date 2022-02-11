@@ -12,6 +12,7 @@ namespace RP_CardAPI
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            
         }
     }
 }

@@ -13,10 +13,10 @@ namespace RP_CardAPI
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CardManagerEntities : DbContext
+    public partial class CardManagerEntities1 : DbContext
     {
-        public CardManagerEntities()
-            : base("name=CardManagerEntities")
+        public CardManagerEntities1()
+            : base("name=CardManagerEntities1")
         {
         }
     
@@ -27,6 +27,7 @@ namespace RP_CardAPI
     
         public virtual DbSet<Cards> Cards { get; set; }
         public virtual DbSet<Fees> Fees { get; set; }
-        public virtual DbSet<Purchase> Purchase { get; set; }
+        public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

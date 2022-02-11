@@ -14,5 +14,9 @@ namespace RP_CardAPI.Providers.Interfaces
 
         decimal GetCardBalance(string cardNumber);
 
+        void UpdateCardBalance(string cardNumber, decimal paymentValue);
+
+        bool CheckSecurityCode(string cardNumber, string cardSecurityCode);
+
     }
 }

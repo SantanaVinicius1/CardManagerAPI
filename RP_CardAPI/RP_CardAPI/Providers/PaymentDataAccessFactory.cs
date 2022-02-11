@@ -7,12 +7,12 @@ using RP_CardAPI.Providers.Interfaces;
 
 namespace RP_CardAPI.Providers
 {
-    public class CardDataAccessFactory
+    public class PaymentDataAccessFactory
     {
 
-        public static ICardDataAccess getCardDataAccessObj()
+        public static IPaymentDataAccess GetPaymentDataAcessObj()
         {
-            return new CardDataAccess();
+            return new PaymentDataAccess();
         }
     }
 }

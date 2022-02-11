@@ -32,7 +32,7 @@ namespace RP_CardAPI.UsesCases
         /// </summary>
         public CreationDetails execute(OwnerInfo info)
         {
-             return this.createCardManager.CreateCard(info);
+             return createCardManager.CreateCard(info);
         }
 
         #endregion

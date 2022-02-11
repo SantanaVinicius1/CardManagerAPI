@@ -7,7 +7,7 @@ using RP_CardAPI.UsesCases;
 using RP_CardAPI.Models;
 using System.Net.Http;
 using System.Net;
-
+using WebApi.Jwt.Filters;
 
 namespace RP_CardAPI.Controllers
 {
@@ -23,6 +23,7 @@ namespace RP_CardAPI.Controllers
         #region Methods
 
         [HttpPost]
+        [JwtAuthentication]
         public HttpResponseMessage Index(string cardOwnerName, decimal cardBalance)
         {
             OwnerInfo info  = new OwnerInfo(cardOwnerName, cardBalance);

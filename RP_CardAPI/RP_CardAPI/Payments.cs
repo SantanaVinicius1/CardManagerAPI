@@ -12,13 +12,10 @@ namespace RP_CardAPI
     using System;
     using System.Collections.Generic;
     
-    public partial class Cards
+    public partial class Payments
     {
         public int ID { get; set; }
-        public string cardNumber { get; set; }
-        public string OwnerName { get; set; }
-        public string securityCode { get; set; }
-        public Nullable<System.DateTime> expirationDate { get; set; }
-        public Nullable<decimal> balance { get; set; }
+        public string CardNumber { get; set; }
+        public Nullable<decimal> value { get; set; }
     }
 }
