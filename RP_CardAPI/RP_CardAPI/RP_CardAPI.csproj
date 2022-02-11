@@ -134,9 +134,13 @@
     <Compile Include="Cards.cs">
       <DependentUpon>CardManagerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AuthenticationController.cs" />
-    <Compile Include="Controllers\CreateCardController.cs" />
-    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Repositories\Implementations\GetInformationManager.cs" />
+    <Compile Include="Repositories\Interfaces\IGetInformationManager.cs" />
+    <Compile Include="UsesCases\Authentication\Authenticate\AuthenticationController.cs" />
+    <Compile Include="UsesCases\Card\CreateCard\CreateCardController.cs" />
+    <Compile Include="UsesCases\Card\GetBalance\GetBalanceController.cs" />
+    <Compile Include="UsesCases\Card\GetBalance\GetBalanceUseCase.cs" />
+    <Compile Include="UsesCases\Payment\Pay\PaymentController.cs" />
     <Compile Include="Fees.cs">
       <DependentUpon>CardManagerModel.tt</DependentUpon>
     </Compile>
@@ -175,9 +179,9 @@
     <Compile Include="Users.cs">
       <DependentUpon>CardManagerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UsesCases\AuthenticationUseCase.cs" />
-    <Compile Include="UsesCases\CreateCardUseCase.cs" />
-    <Compile Include="UsesCases\PaymentUseCase.cs" />
+    <Compile Include="UsesCases\Authentication\Authenticate\AuthenticationUseCase.cs" />
+    <Compile Include="UsesCases\Card\CreateCard\CreateCardUseCase.cs" />
+    <Compile Include="UsesCases\Payment\Pay\PaymentUseCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CardManagerModel.edmx">
@@ -197,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
