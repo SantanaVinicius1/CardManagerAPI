@@ -30,9 +30,9 @@ namespace RP_CardAPI.UsesCases
         /// <summary>
         /// Exec the creation of a new card
         /// </summary>
-        public CreationDetails execute(OwnerInfo info)
+        public CreationDetails execute(decimal cardBalance)
         {
-             return createCardManager.CreateCard(info);
+             return createCardManager.CreateCard(cardBalance);
         }
 
         #endregion

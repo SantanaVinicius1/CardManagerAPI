@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RP_CardAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace RP_CardAPI.Repositories.Interfaces
 {
     interface IGetInformationManager
     {
-        decimal getBalance(string cardNumber);
+        CardInfo getBalance(int cardID);
     }
 }

@@ -11,26 +11,22 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cardNumber" Type="varchar" MaxLength="15" />
-          <Property Name="OwnerName" Type="varchar" MaxLength="100" />
-          <Property Name="securityCode" Type="varchar" MaxLength="3" />
-          <Property Name="expirationDate" Type="datetime" />
-          <Property Name="balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Fees">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="feeValue" Type="decimal" Precision="18" Scale="5" />
-          <Property Name="hourCalculated" Type="datetime" />
+          <Property Name="FeeValue" Type="decimal" Precision="2" Scale="2" />
         </EntityType>
         <EntityType Name="Payments">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CardNumber" Type="varchar" MaxLength="15" />
-          <Property Name="value" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CardID" Type="int" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -50,39 +46,12 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CardManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Cards">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cardNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="OwnerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="securityCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="expirationDate" Type="DateTime" Precision="3" />
-          <Property Name="balance" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
-        <EntityType Name="Fees">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="feeValue" Type="Decimal" Precision="18" Scale="5" />
-          <Property Name="hourCalculated" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityContainer Name="CardManagerEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cards" EntityType="Self.Cards" />
-          <EntitySet Name="Fees" EntityType="Self.Fees" />
-          <EntitySet Name="Payments" EntityType="CardManagerModel.Payments" />
           <EntitySet Name="Users" EntityType="CardManagerModel.Users" />
+          <EntitySet Name="Cards" EntityType="CardManagerModel.Cards" />
+          <EntitySet Name="Fees" EntityType="CardManagerModel.Fees" />
+          <EntitySet Name="Payments" EntityType="CardManagerModel.Payments" />
         </EntityContainer>
-        <EntityType Name="Payments">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CardNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="value" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -91,47 +60,66 @@
           <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Cards">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cardNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Fees">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeeValue" Type="Decimal" Precision="2" Scale="2" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CardID" Type="Int32" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CardManagerModelStoreContainer" CdmEntityContainer="CardManagerEntities1">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CardManagerModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cards">
             <EntityTypeMapping TypeName="CardManagerModel.Cards">
               <MappingFragment StoreEntitySet="Cards">
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
-                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
-                <ScalarProperty Name="securityCode" ColumnName="securityCode" />
-                <ScalarProperty Name="expirationDate" ColumnName="expirationDate" />
-                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fees">
             <EntityTypeMapping TypeName="CardManagerModel.Fees">
               <MappingFragment StoreEntitySet="Fees">
+                <ScalarProperty Name="FeeValue" ColumnName="FeeValue" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="feeValue" ColumnName="feeValue" />
-                <ScalarProperty Name="hourCalculated" ColumnName="hourCalculated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="CardManagerModel.Payments">
               <MappingFragment StoreEntitySet="Payments">
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="CardManagerModel.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CardID" ColumnName="CardID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

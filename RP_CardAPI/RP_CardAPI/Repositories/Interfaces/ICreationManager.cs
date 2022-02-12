@@ -8,7 +8,7 @@ namespace RP_CardAPI.Repositories
 {
     public interface ICreationManager
     {
-        CreationDetails CreateCard(OwnerInfo info);
+        CreationDetails CreateCard(decimal cardBalance);
         
     }
 }

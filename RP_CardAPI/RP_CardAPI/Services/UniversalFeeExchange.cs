@@ -30,6 +30,8 @@ namespace PaymentFeeModule.Services
             //Calculate the new factor
             decimal factor = new decimal(r.NextDouble() * 2);
 
+            // minvalue - (randomvalue * (maxvalue - minvalue))
+
             //set newFee on the DB 
             decimal newFee = lastFee * factor; 
 

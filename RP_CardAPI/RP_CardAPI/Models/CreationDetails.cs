@@ -13,6 +13,11 @@ namespace RP_CardAPI.Models
 
         public CreationDetails() { }
 
+        public CreationDetails(bool success)
+        {
+            Success = success;
+        }
+
         public CreationDetails(bool success, string details)
         {
             Success = success;

@@ -1,5 +1,4 @@
 ﻿using RP_CardAPI.UsesCases;
-using RP_CardAPI.Repositories.Implementations;
 using RP_CardAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebApi.Jwt.Filters;
+using System.Web;
 
 namespace RP_CardAPI.Controllers
 {
@@ -23,21 +23,30 @@ namespace RP_CardAPI.Controllers
         #region Methods
         [HttpPost]
         [JwtAuthentication]
-        public HttpResponseMessage Index(string cardNumber, string cardSecurityCode, decimal purchaseValue)
+        public PaymentDetails Index()
         {
+            var rParams = HttpContext.Current.Request.Form;
+            int cardID = Convert.ToInt32(rParams.Get("cardID") == "" ? "0" : rParams.Get("cardID"));
+            decimal paymentValue = Convert.ToInt32(rParams.Get("paymentValue") == "" ? "0" : rParams.Get("paymentValue"));
 
-            Payment purchase = new Payment(cardNumber, cardSecurityCode, purchaseValue);
-            PaymentDetails details;
+            Payment payment = new Payment(cardID, paymentValue);
+            PaymentDetails details = new PaymentDetails();
 
             try
             {
-                details = paymentUseCase.execute(purchase);
+                if(cardID <= 0 || paymentValue <= 0)
+                {
+                    details.Success = false;
+                    details.Message = "Invalid payment information";
+                }
 
-                return Request.CreateResponse(HttpStatusCode.OK, details.Message);
+                details = paymentUseCase.execute(payment);
+
+                return details;
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                throw ex;
             }
 
         }

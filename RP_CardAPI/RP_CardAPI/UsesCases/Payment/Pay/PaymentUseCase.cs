@@ -32,17 +32,17 @@ namespace RP_CardAPI.UsesCases
         /// <summary>
         /// Exec the payment 
         /// </summary>
-        public PaymentDetails execute(Payment purchase)
+        public PaymentDetails execute(Payment payment)
         {
 
             //Check if the payment is valid
-            PaymentDetails paymentDetail = paymentManager.ValidatePayment(purchase);
+            PaymentDetails paymentDetail = paymentManager.ValidatePayment(payment);
 
             if (paymentDetail.Success)
             {
                 //if the payment is valid then update the balance
 
-                paymentManager.SavePayment(purchase);
+                paymentManager.SavePayment(payment);
                
 
 

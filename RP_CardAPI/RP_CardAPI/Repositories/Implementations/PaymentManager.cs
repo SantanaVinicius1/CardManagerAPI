@@ -24,7 +24,7 @@ namespace RP_CardAPI.Repositories.Implementations
         public void SavePayment(Payment payment)
         {
             _paymentDataAccess.SavePayment(payment);
-            _cardDataAccess.UpdateCardBalance(payment.cardNumber, (payment.purchaseValue + _paymentDataAccess.GetFeeValue()));
+            _cardDataAccess.UpdateCardBalance(payment.CardID, (payment.PaymentValue + _paymentDataAccess.GetFeeValue()));
         }
 
         public PaymentDetails ValidatePayment(Payment payment)
@@ -33,21 +33,14 @@ namespace RP_CardAPI.Repositories.Implementations
             decimal balance;
             
             
-            balance = _cardDataAccess.GetCardBalance(payment.cardNumber);
-            decimal valueWithFee = payment.purchaseValue + _paymentDataAccess.GetFeeValue();
+            balance = _cardDataAccess.GetCardBalance(payment.CardID).CardBalance;
+            decimal valueWithFee = payment.PaymentValue + _paymentDataAccess.GetFeeValue();
 
-            if(!_cardDataAccess.CheckSecurityCode(payment.cardNumber, payment.cardSecurityCode))
-            {
-                details.Success = false;
-                details.Message = "Invalid Card Security Code";
-
-                return details;
-            }
 
             if(valueWithFee > balance)
             {
                 details.Success = false;
-                details.Message = "Insuficient funds!";
+                details.Message = $"Insuficient funds! \r\n Payment value with Fees: {valueWithFee} \r\n Card balance: {balance}";
 
                 return details;
             }

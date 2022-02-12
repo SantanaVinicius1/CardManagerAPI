@@ -15,7 +15,6 @@ namespace RP_CardAPI
     public partial class Fees
     {
         public int ID { get; set; }
-        public Nullable<decimal> feeValue { get; set; }
-        public Nullable<System.DateTime> hourCalculated { get; set; }
+        public Nullable<decimal> FeeValue { get; set; }
     }
 }

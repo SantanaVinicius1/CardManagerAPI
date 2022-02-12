@@ -23,30 +23,27 @@ namespace RP_CardAPI.Repositories.Implementations
             _cardDataAccess = CardDataAccessFactory.getCardDataAccessObj();
         }
 
-        public CreationDetails CreateCard(OwnerInfo info)
+        public CreationDetails CreateCard(decimal balance)
         {
-            Card card = GenerateCard(info.Name, info.Balance);
-            CreationDetails details = ValidateData(card);
+            Card card = GenerateCardNumber(balance);
+            CreationDetails details = ValidateData(balance);
+            int cardID;
 
             if (details.Success)
             {
-                _cardDataAccess.AddCardToDatabase(card);
+                cardID = _cardDataAccess.AddCardToDatabase(card);
 
+                details.Message = $"Card successfully created. Your card ID is {cardID}, you may use it to make payments";
             }
 
             return details; 
         }
 
-        private CreationDetails ValidateData(Card card)
+        private CreationDetails ValidateData(decimal balance)
         {
-            CreationDetails details = new CreationDetails(true, $" Card created successfully \n Card Number: {card.Number} \n Card Security Code: {card.SecurityCode} \n Card Expiration Date: {card.ExpirationDate.ToShortDateString()} \n Balance: {card.Balance}");
+            CreationDetails details = new CreationDetails(true);
 
-            if (string.IsNullOrEmpty(card.OwnerName))
-            {
-                details.Message = "Invalid owner name";
-                details.Success = false;
-            }
-            if(card.Balance <= 0)
+            if(balance <= 0)
             {
                 details.Message = "Balance value must be higher than 0";
                 details.Success = false;
@@ -57,21 +54,14 @@ namespace RP_CardAPI.Repositories.Implementations
         }
 
 
-        private Card GenerateCard(string ownerName, decimal balance)
+        private Card GenerateCardNumber(decimal balance)
         {
             string cardNumber = string.Empty;
-            string cardSecurityCode;
-            DateTime expirationDate = DateTime.Now.AddYears(5);
             Random r = new Random();
 
 
-            // Generate the card info base on random information
+            // Generate the card info based on random information
             // Card number generated with 15 random digits
-            // CSC generated with three random digits if higher or equals to 100, or 0 + two random digits if lower than 100
-            // Expiration date generated based on current time plus 5 years
-
-
-            //Card number
             for(int i = 0; i < 15; i++)
             {
                 int digit = r.Next(0, 9);
@@ -79,19 +69,8 @@ namespace RP_CardAPI.Repositories.Implementations
                 cardNumber += digit.ToString();
             }
 
-            // Security Code
-            int securityNumber = r.Next(10, 999);
 
-            if(securityNumber <= 100)
-            {
-                cardSecurityCode = $"0{securityNumber}";
-            }
-            else
-            {
-                cardSecurityCode = securityNumber.ToString();
-            }
-
-            return new Card(cardNumber, balance, cardSecurityCode, ownerName, expirationDate);
+            return new Card(cardNumber, balance);
 
         }
 

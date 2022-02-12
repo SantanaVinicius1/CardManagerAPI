@@ -15,7 +15,7 @@ namespace RP_CardAPI
     public partial class Payments
     {
         public int ID { get; set; }
-        public string CardNumber { get; set; }
-        public Nullable<decimal> value { get; set; }
+        public Nullable<int> CardID { get; set; }
+        public Nullable<decimal> Value { get; set; }
     }
 }

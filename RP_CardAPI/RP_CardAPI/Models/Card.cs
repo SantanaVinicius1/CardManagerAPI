@@ -9,24 +9,26 @@ namespace RP_CardAPI.Models
     {
         #region Properties
 
+        public readonly int ID;
         public readonly string Number;
         public readonly decimal Balance;
-        public readonly string SecurityCode;
-        public readonly string OwnerName;
-        public readonly DateTime ExpirationDate;
 
 
         #endregion
 
         #region Constructor
 
-        public Card(string cNumber, decimal cBalance, string cSecurityCode, string cOwnerName, DateTime cExpirationDate)
+        public Card(int id, string cNumber, decimal cBalance)
+        {
+            ID = id;
+            Number = cNumber;
+            Balance = cBalance;
+        }
+
+        public Card(string cNumber, decimal cBalance)
         {
             Number = cNumber;
             Balance = cBalance;
-            SecurityCode = cSecurityCode;
-            OwnerName = cOwnerName;
-            ExpirationDate = cExpirationDate;
         }
 
         #endregion

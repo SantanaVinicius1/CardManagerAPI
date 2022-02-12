@@ -1,4 +1,5 @@
-﻿using RP_CardAPI.Repositories.Implementations;
+﻿using RP_CardAPI.Models;
+using RP_CardAPI.Repositories.Implementations;
 using RP_CardAPI.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,9 @@ namespace RP_CardAPI.UsesCases
 
         #region Methods
 
-        /// <summary>
-        /// Exec the creation of a new card
-        /// </summary>
-        public decimal execute(string cardNumber)
+        public CardInfo execute(int cardID)
         {
-            return createCardManager.getBalance(cardNumber);
+            return createCardManager.getBalance(cardID);
         }
 
         #endregion

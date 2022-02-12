@@ -24,21 +24,23 @@ namespace RP_CardAPI.Controllers
 
         [HttpPost]
         [JwtAuthentication]
-        public HttpResponseMessage Index(string cardOwnerName, decimal cardBalance)
+        public CreationDetails Index()
         {
-            OwnerInfo info  = new OwnerInfo(cardOwnerName, cardBalance);
             CreationDetails details;
+            var rParams = HttpContext.Current.Request.Form;
+            decimal balance = Convert.ToDecimal(rParams.Get("balance") == "" ? "0" : rParams.Get("balance"));
 
             try
             {
-                details = createCardUseCase.execute(info);
 
-                return Request.CreateResponse(HttpStatusCode.OK, details.Message);
+                details = createCardUseCase.execute(balance);
+
+                return details;
             }
             catch (Exception ex)
             {
 
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                throw ex;
             }
         }
 

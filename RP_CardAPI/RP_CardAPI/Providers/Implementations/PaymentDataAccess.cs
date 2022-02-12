@@ -19,7 +19,7 @@ namespace RP_CardAPI.Providers.Implementations
                 {
 
                     var query = (from b in db.Fees
-                                 select b.feeValue).First();
+                                 select b.FeeValue).First();
 
                     feeValue = query.Value;
                 }
@@ -41,7 +41,7 @@ namespace RP_CardAPI.Providers.Implementations
 
                 var db = new CardManagerEntities1();
 
-                db.Payments.Add(new Payments { CardNumber = payment.cardNumber, value = payment.purchaseValue });
+                db.Payments.Add(new Payments { CardID = payment.CardID, Value = payment.PaymentValue });
 
                 db.SaveChanges();
 

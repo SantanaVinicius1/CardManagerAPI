@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace RP_CardAPI.Controllers
@@ -17,13 +18,33 @@ namespace RP_CardAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public string Index(string username, string password)
+        public AuthInfo Index()
         {
-            User user = new User(username, password);
+            var rParams = HttpContext.Current.Request.Form;
+            User user = new User();
+            string token;
 
             try
             {
-                return authenticationUseCase.execute(user);
+                if (string.IsNullOrEmpty(rParams.Get("username")) || string.IsNullOrEmpty(rParams.Get("password")))
+                {
+                    return new AuthInfo(false, "", "Invalid username or password");
+                    
+                }
+
+                user.Username = rParams.Get("username");
+                user.Password = rParams.Get("password");
+
+                token = authenticationUseCase.execute(user);
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return new AuthInfo(false, "", "Wrong username or password");
+                }
+
+                return new AuthInfo(true, token, "User authenticated");
+
+
             }
             catch (Exception ex)
             {

@@ -20,7 +20,7 @@ namespace RP_CardAPI.Repositories.Implementations
                 return JwtManager.GenerateToken(user.Username);
             }
 
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            return string.Empty;
         }
 
 
@@ -30,16 +30,14 @@ namespace RP_CardAPI.Repositories.Implementations
             {
                 var query = (from b in db.Users
                              where b.Username == user.Username && b.password == user.Password
-                             select 1).First();
+                             select b);
 
-                if(query == 1)
-                {
-                    return true;
-                }
-                else
+                if(!query.Any())
                 {
                     return false;
                 }
+
+                return true; 
             }
         }
     }

@@ -9,15 +9,42 @@ namespace RP_CardAPI.Providers.Implementations
 {
     public class CardDataAccess : ICardDataAccess
     {
-        public void AddCardToDatabase(Card card)
+        public int AddCardToDatabase(Card card)
+        {
+
+            Cards insertObj = new Cards { cardNumber = card.Number, Balance = card.Balance };
+
+            try
+            {
+                var db = new CardManagerEntities1();
+
+                db.Cards.Add(insertObj);
+
+                db.SaveChanges();
+
+                return insertObj.ID;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+
+        public void UpdateCardBalance(int cardID, decimal paymentValue)
         {
             try
             {
                 var db = new CardManagerEntities1();
 
-                db.Cards.Add(new Cards { cardNumber = card.Number, balance = card.Balance, expirationDate = card.ExpirationDate, OwnerName = card.OwnerName, securityCode = card.SecurityCode });
+                var card = db.Cards.Where(x => x.ID == cardID).FirstOrDefault();
+
+                card.Balance = card.Balance - paymentValue;
 
                 db.SaveChanges();
+
             }
             catch (Exception ex)
             {
@@ -26,31 +53,10 @@ namespace RP_CardAPI.Providers.Implementations
             }
         }
 
-
-        public void UpdateCardBalance(string cardNumber, decimal paymentValue)
-        {
-            try
-            {
-                var db = new CardManagerEntities1();
-
-                var card = db.Cards.Where(x => x.cardNumber == cardNumber).FirstOrDefault();
-
-                card.balance = card.balance - paymentValue;
-
-                db.SaveChanges();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public decimal GetCardBalance(string cardNumber)
+        public CardInfo GetCardBalance(int cardID)
         {
 
-            decimal balance = 0;
+            CardInfo info = new CardInfo();
 
             try
             {
@@ -59,10 +65,11 @@ namespace RP_CardAPI.Providers.Implementations
                 {
 
                     var query = (from b in db.Cards
-                                 where b.cardNumber == cardNumber
-                                 select b.balance).First();
+                                 where b.ID == cardID
+                                 select b).First();
 
-                    balance = query.Value;
+                    info.cardNumber = query.cardNumber;
+                    info.CardBalance = (decimal) query.Balance;
                 }
             }
             catch (Exception ex)
@@ -71,39 +78,9 @@ namespace RP_CardAPI.Providers.Implementations
                 throw ex;
             }
 
-            return balance;
+            return info;
         }
 
-        public bool CheckSecurityCode(string cardNumber, string cardSecurityCode)
-        {
-
-            bool returnObj = false;
-
-            try
-            {
-                using (var db = new CardManagerEntities1())
-                {
-
-                    var query = (from b in db.Cards
-                                 where b.cardNumber == cardNumber
-                                 select b.securityCode).First();
-
-
-                    if(cardSecurityCode == query)
-                    {
-                        returnObj = true;
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw ex ;
-            }
-
-            return returnObj;
-
-        }
+      
     }
 }

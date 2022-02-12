@@ -10,13 +10,12 @@ namespace RP_CardAPI.Providers.Interfaces
     public interface ICardDataAccess
     {
 
-        void AddCardToDatabase(Card card);
+        int AddCardToDatabase(Card card);
 
-        decimal GetCardBalance(string cardNumber);
+        CardInfo GetCardBalance(int cardID);
 
-        void UpdateCardBalance(string cardNumber, decimal paymentValue);
+        void UpdateCardBalance(int cardID, decimal paymentValue);
 
-        bool CheckSecurityCode(string cardNumber, string cardSecurityCode);
 
     }
 }

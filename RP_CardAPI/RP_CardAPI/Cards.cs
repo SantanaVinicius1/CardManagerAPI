@@ -16,9 +16,6 @@ namespace RP_CardAPI
     {
         public int ID { get; set; }
         public string cardNumber { get; set; }
-        public string OwnerName { get; set; }
-        public string securityCode { get; set; }
-        public Nullable<System.DateTime> expirationDate { get; set; }
-        public Nullable<decimal> balance { get; set; }
+        public Nullable<decimal> Balance { get; set; }
     }
 }

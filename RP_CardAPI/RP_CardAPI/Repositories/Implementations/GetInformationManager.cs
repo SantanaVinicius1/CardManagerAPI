@@ -1,4 +1,5 @@
-﻿using RP_CardAPI.Providers;
+﻿using RP_CardAPI.Models;
+using RP_CardAPI.Providers;
 using RP_CardAPI.Providers.Interfaces;
 using RP_CardAPI.Repositories.Interfaces;
 using System;
@@ -21,11 +22,11 @@ namespace RP_CardAPI.Repositories.Implementations
             _cardDataAccess = CardDataAccessFactory.getCardDataAccessObj();
         }
 
-        public decimal getBalance(string cardNumber)
+        public CardInfo getBalance(int cardID)
         {
             try
             {
-                return _cardDataAccess.GetCardBalance(cardNumber);
+                return _cardDataAccess.GetCardBalance(cardID);
             }
             catch (Exception ex)
             {

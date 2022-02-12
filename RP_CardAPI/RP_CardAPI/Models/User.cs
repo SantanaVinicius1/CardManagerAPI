@@ -10,7 +10,7 @@ namespace RP_CardAPI.Models
         public string Username;
         public string Password;
 
-
+        public User() { }
         public User(string username, string password)
         {
             Username = username;

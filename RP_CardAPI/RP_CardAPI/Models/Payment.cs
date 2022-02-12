@@ -7,17 +7,16 @@ namespace RP_CardAPI.Models
 {
     public class Payment
     {
-        public string cardNumber;
-        public string cardSecurityCode;
-        public decimal purchaseValue;
-        
+        public int CardID;
+        public decimal PaymentValue;
 
+        
         public Payment() { }
-        public Payment(string cNumber, string cSecurityCode, decimal pValue)
+        public Payment(int cID, decimal pValue)
         {
-            cardNumber = cNumber;
-            purchaseValue = pValue;
-            cardSecurityCode = cSecurityCode;
+            CardID = cID;
+            PaymentValue = pValue;
+
         }
     }
 }
