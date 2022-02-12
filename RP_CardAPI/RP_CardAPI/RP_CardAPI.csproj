@@ -166,6 +166,9 @@
       <DependentUpon>CardManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthInfo.cs" />
+    <Compile Include="Providers\FeeDataAccessFactory.cs" />
+    <Compile Include="Providers\Implementations\FeeDataAccess.cs" />
+    <Compile Include="Providers\Interfaces\IFeeDataAccess.cs" />
     <Compile Include="Repositories\Implementations\GetInformationManager.cs" />
     <Compile Include="Repositories\Interfaces\IGetInformationManager.cs" />
     <Compile Include="UsesCases\Authentication\Authenticate\AuthenticationController.cs" />

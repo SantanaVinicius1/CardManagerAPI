@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PaymentFeeModule.Services
+namespace RP_CardAPI.Services
 {
     public sealed class UniversalFeeExchange
     {
@@ -23,17 +23,16 @@ namespace PaymentFeeModule.Services
             return _instance;
         }
 
-        public static void CalculateFee(decimal lastFee)
+        public static decimal CalculateFee(decimal lastFee)
         {
             Random r = new Random();
 
             //Calculate the new factor
             decimal factor = new decimal(r.NextDouble() * 2);
 
-            // minvalue - (randomvalue * (maxvalue - minvalue))
+            decimal newFee = lastFee * factor;
 
-            //set newFee on the DB 
-            decimal newFee = lastFee * factor; 
+            return newFee;
 
         }
 

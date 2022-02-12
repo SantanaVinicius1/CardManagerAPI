@@ -27,7 +27,7 @@ namespace RP_CardAPI
     
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Cards> Cards { get; set; }
-        public virtual DbSet<Fees> Fees { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Fees> Fees { get; set; }
     }
 }
