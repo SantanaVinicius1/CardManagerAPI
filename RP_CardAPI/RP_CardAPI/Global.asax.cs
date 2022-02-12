@@ -15,11 +15,8 @@ namespace RP_CardAPI
         {
 
             Thread FeeService = new Thread(new ThreadStart(UFEScheduler.StartScheduler));
-
             FeeService.IsBackground = true;
-
             FeeService.Name = "FeeService";
-
             FeeService.Start();
 
 
