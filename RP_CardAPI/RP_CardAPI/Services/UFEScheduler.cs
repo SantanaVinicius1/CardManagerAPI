@@ -11,6 +11,9 @@ namespace RP_CardAPI.Services
     public static class UFEScheduler
     {
 
+        /// <summary>
+        /// Set the scheduler to update the fees ever hour
+        /// </summary>
         public static void StartScheduler()
         {
             System.Timers.Timer t = new System.Timers.Timer();

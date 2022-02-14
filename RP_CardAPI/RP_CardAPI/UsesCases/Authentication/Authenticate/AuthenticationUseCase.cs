@@ -22,7 +22,7 @@ namespace RP_CardAPI.UsesCases
 
         public string execute(User user)
         {
-            return _authenticationManager.AuthenticateUser(user);
+            return _authenticationManager.GetUserToken(user);
         }
 
     }

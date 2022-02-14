@@ -13,9 +13,13 @@ namespace RP_CardAPI.Repositories.Implementations
     public class AuthenticationManager : IAuthenticationManager
     {
 
-        public string AuthenticateUser(User user)
+
+        /// <summary>
+        /// Return the JWT of a authenticated user
+        /// </summary>
+        public string GetUserToken(User user)
         {
-            if (checkUser(user))
+            if (AuthenticateUser(user))
             {
                 return JwtManager.GenerateToken(user.Username);
             }
@@ -23,8 +27,10 @@ namespace RP_CardAPI.Repositories.Implementations
             return string.Empty;
         }
 
-
-        public bool checkUser(User user)
+        /// <summary>
+        /// Authenticate user into databse
+        /// </summary>
+        public bool AuthenticateUser(User user)
         {
             using (var db = new CardManagerEntities1())
             {

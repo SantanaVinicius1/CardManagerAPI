@@ -10,7 +10,10 @@ namespace RP_CardAPI.Repositories.Interfaces
     public interface IAuthenticationManager
     {
 
-        string AuthenticateUser(User user);
+        /// <summary>
+        /// Return the JWT of a authenticated user
+        /// </summary>
+        string GetUserToken(User user);
 
     }
 }

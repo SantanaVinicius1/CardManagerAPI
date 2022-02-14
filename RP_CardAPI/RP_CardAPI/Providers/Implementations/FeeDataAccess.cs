@@ -16,9 +16,15 @@ namespace RP_CardAPI.Providers.Implementations
                 {
 
                     var query = (from b in db.Fees
-                                 select b.FeeValue).First();
+                                 select b.FeeValue);
 
-                    return query.Value;
+                    //if a previous fee value isn't set, then set it as 1;
+                    if (!query.Any())
+                    {
+                        return 1;
+                    }
+
+                    return query.First().Value;
                 }
             }
             catch (Exception ex)
